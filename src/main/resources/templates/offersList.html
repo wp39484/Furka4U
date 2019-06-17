@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Lista ofert</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+    <section layout:fragment="content">
+        <div id="offerFilter" class="panel panel-default">
+            <div class="panel-heading">Szukaj ofert</div>
+            <div class="panel-body">
+                <form th:object="${offerFilter}" id="offerFilterForm" action="/" method="get" class="form-inline" >
+                    <select class="form-control" th:field="*{manufacturerId}">
+                        <option th:value="null">Marka</option>
+                        <option th:each="manufacturer : ${carManufacturers}" th:value="${manufacturer.id}" th:text="${manufacturer.name}">Marka</option>
+                    </select>
+                    <select class="form-control" th:field="*{modelId}">
+                        <option th:value="null">Model</option>
+                        <option th:each="models : ${carModels}" th:value="${models.id}" th:text="${models.name}">Model</option>
+                    </select>
+                    
+                    <input placeholder="Rok od" type="number" class="form-control" th:field="*{yearFrom}" />
+                    -
+                    <input placeholder="Rok do" type="number" class="form-control" th:field="*{yearTo}" />
+                   
+                    <input placeholder="Cena od" type="number" class="form-control" th:field="*{priceFrom}" />
+                    -
+                    <input placeholder="Cena do" type="number" class="form-control" th:field="*{priceTo}" />
+                    
+
+                    <select class="form-control" th:field="*{fuelTypeId}">
+                        <option th:value="null">Rodzaj paliwa</option>
+                        <option th:each="fuel : ${fuelTypes}" th:value="${fuel.id}" th:text="${fuel.name}">Fuel</option>
+                    </select>
+
+                    <br />
+                    <input type="submit" value="Filtruj" class="form-control"/>
+                </form>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>Tytuł</th>
+                <th>Marka</th>
+                <th>Model</th>
+                <th>Rocznik</th>
+                <th>Cena</th>
+                <th></th>
+            </tr>
+            <tr th:each="offer : ${offers}">
+                <td th:text="${offer.title}"></td>
+                <td th:text="${offer.carModel.manufacturer.name}"></td>
+                <td th:text="${offer.carModel.name}"></td>
+                <td th:text="${offer.year}"></td>
+                <td class="text-right">
+                    <span th:text="${#numbers.formatDecimal(offer.price, 0, 'WHITESPACE', 0, 'COMMA')}"></span>zł
+                </td>
+                <td><a th:href="|/offer/${offer.id}|">Pokaż</a></td>
+            </tr>
+        </table>
+    </section>
+</body>
+</html>

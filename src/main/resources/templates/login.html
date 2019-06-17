@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+    <head>
+        <title>Szczegóły oferty</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <section layout:fragment="content">
+            <h1 th:text="${header}"></h1>
+            <form th:object="${loginUser}" action="/valid" method="get" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Login:</label>
+                    <div class="col-sm-3" >
+                        <input type="text" th:field="*{username}" class="form-control"/>
+                    </div>
+                </div>
+                <div  class="form-group">
+                    <label class="col-sm-2 control-label">Hasło:</label>
+                    <div class="col-sm-3" >
+                        <input type="text" th:field="*{password}" class="form-control"/>
+                    </div>
+                </div>
+                <div  class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-3" >
+                        <p style="color: red" th:text="${inValid} ? 'Niepoprawne dane!'"> d</p>
+                    </div>
+                </div>
+           
+                <div class="form-group">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2">
+                        <input type="submit" value="Logowanie" class="form-control btn btn-default"/>
+                        <br/>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="/" class="btn btn-default">Powrót</a>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </body>
+</html>
